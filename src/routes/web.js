@@ -1,4 +1,6 @@
 // sử lý các router
+const axios = require('axios')
+require('dotenv').config()
 const express = require('express')
 const connection = require('../config/database')
 const {getHomepage, postCreateuser, getCreate, getListfootball, getSuggest} = require('../controllers/hompage')
@@ -24,10 +26,9 @@ router.get('/pitches', async (req, res) => {
                 console.error('Lỗi truy vấn:', err);
                 res.status(500).send('Lỗi truy vấn cơ sở dữ liệu');
             } else {
-                result.forEach((item) => {
-                    console.log(item); // Hoặc thực hiện các thao tác khác với item
-                });
-                res.send(result);
+                const urls = result.map(item => item.url);
+                console.log(urls)
+                res.send(urls)
             }
         });
     } catch (error) {
