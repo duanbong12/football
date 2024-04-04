@@ -1,0 +1,41 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sân bóng</title>
+</head>
+<body>
+  <h1>Tìm kiếm sân bóng</h1>
+  <form action="/pitches" method="get">
+    <label for="price">Giá tiền tối đa:</label>
+    <input type="number" id="price" name="price">
+    <label for="location">Vị trí:</label>
+    <input type="text" id="location" name="location">
+    <button type="submit">Tìm kiếm</button>
+  </form>
+  <div id="results"></div>
+
+  <script>
+    const form = document.querySelector('form');
+    const resultsDiv = document.getElementById('results');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const price = form.price.value;
+      const location = form.location.value;
+
+      try {
+        const response = await fetch(`/pitches?price=${price}&location=${location}`);
+        const data = await response.json();
+
+        // Hiển thị kết quả
+        resultsDiv.innerHTML = JSON.stringify(data, null, 2);
+      } catch (error) {
+        console.error('Lỗi khi gửi yêu cầu:', error);
+      }
+    });
+  </script>
+</body>
+</html>

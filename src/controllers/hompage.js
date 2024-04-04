@@ -7,12 +7,9 @@ const getHomepage = (req, res) => {
     // process data
     return res.render('home.ejs')
 }   
-const getAbc = (req, res) => {
-   return res.render('sample.ejs')
-}
+
 const postCreateuser = (req, res) => {
     let {email,Tên, city} = req.body
-    
     connection.query(
         `INSERT INTO users (email, name1, city)
          VALUES (?, ?, ?) `,
@@ -22,7 +19,20 @@ const postCreateuser = (req, res) => {
         }
       );
 }
-
+const getCreate = (req, res) => {
+     return res.render('create.ejs')
+}
+const getListfootball = (req, res) => {
+  connection.query(
+    'SELECT * FROM demo2.pitches',
+    function (err, results) {
+      res.send(results)
+    }
+  );  
+}
+const getSuggest = (req, res) => {
+     res.render('suggest.ejs')
+}
 module.exports = {
-    getHomepage, getAbc, postCreateuser
+    getHomepage, postCreateuser, getCreate, getListfootball, getSuggest
 }
